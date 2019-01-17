@@ -1,0 +1,29 @@
+{% extends "blogdemo/base_blogdemo.html" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg">
+        {% if post %}
+            <h1>{{post.title}}</h1>
+            <p>{{post.text}}</p>
+        {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg">
+            <h2>Comments:</h2>
+            {% if comments %}
+                {% for comment in comments %}
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <span>{{comment.creator}}:</span>
+                        </div>
+                        <div class="col-lg-12 border-bottom">
+                            <p>{{comment}}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

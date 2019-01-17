@@ -1,5 +1,14 @@
 {% extends "blogdemo/base_blogdemo.html" %}
 
 {% block content %}
-    <h1>It's blogdemo app</h1>
+    <div class="col-lg">
+    {% if posts %}
+        <h1>Posts</h1>
+        <ul>
+        {% for post in posts %}
+            <li><a href="{% url 'blogdemo:detail' post.id %}">{{ post.title }}</a></li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    </div>
 {% endblock %}

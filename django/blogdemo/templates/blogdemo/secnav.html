@@ -1,14 +1,11 @@
+{% load activeurl %}
+
 <nav class="bg-secondary">
   <div class="container d-flex">
+    {% activeurl menu="no" %}
     <ul class="nav nav-dark">
-        <li class="nav-item"><a href="#" class="nav-link">Lorem, ipsum dolor.</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">Lorem, ipsum dolor.</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">Lorem, ipsum dolor.</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">Lorem, ipsum dolor.</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">Lorem, ipsum dolor.</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">Lorem, ipsum dolor.</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">Lorem, ipsum dolor.</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">Lorem, ipsum dolor.</a></li>
+        <li class="nav-item"><a href="{% url 'blogdemo:index' %}" class="nav-link">Index</a></li>
     </ul>
+    {% endactiveurl %}
   </div>
 </nav>
