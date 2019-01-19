@@ -1,0 +1,16 @@
+{% extends "blogdemo/base_blogdemo.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-8">
+            <h1>{{header|default:'Create'}}</h1>
+            <form action="{% url 'blogdemo:createpost' %}" method="post">
+                {% csrf_token %}
+                {{form|crispy}}
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

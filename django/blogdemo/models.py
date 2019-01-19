@@ -12,6 +12,7 @@ class Post(models.Model):
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     creator = models.ForeignKey('auth.User', related_name='comments', on_delete=models.CASCADE, null=True)
+    pub_date = models.DateTimeField('date published',null=True)
     text = models.TextField(max_length=280)
 
     def __str__(self):
