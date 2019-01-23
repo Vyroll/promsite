@@ -3,3 +3,10 @@
 {% block secnav %}
     {% include "blogdemo/secnav.html" %}
 {% endblock %}
+
+{% block content %}
+    <div class="row">
+        {% block header %}<div class="col-sm-12"><h1>Title placeholder</h1></div>{% endblock %}
+    </div>
+    {% block text %}{% endblock %}
+{% endblock %}

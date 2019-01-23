@@ -1,0 +1,19 @@
+{% extends "blogdemo/base_blogdemo.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block header %}<div class="col-12"><h1>My Posts</h1></div>{% endblock %}
+
+{% block text %}
+<div class="row">
+    {% if posts %}
+    <div class="col-12">
+        <ul>
+        {% for post in posts %}
+            <li><a href="{% url 'blogdemo:detail' post.id %}">{{ post.title }}</a></li>
+        {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.db import IntegrityError
 
 from .models import Post, Comment
-from .forms import PostForm, CommentForm
+from .forms import PostForm, CommentForm, PostFilter
 
 import logging
 logger = logging.getLogger(__name__)
@@ -18,8 +18,10 @@ class IndexView(View):
     template_name = 'blogdemo/index.html'
 
     def get(self, request, *args, **kwargs):
-        posts = Post.objects.all()
-        return render(request, self.template_name, {'posts':posts})
+        post_list = Post.objects.all()
+        post_filter = PostFilter(request.GET, queryset=post_list)
+        
+        return render(request, self.template_name, {'posts':post_list, 'filter':post_filter})
 
 class DetailView(View):
     """Detail Post view"""
@@ -35,7 +37,7 @@ class DetailView(View):
         
 class CreatePostView(View):
     """Creating Post"""
-    template_name = 'blogdemo/form.html'
+    template_name = 'blogdemo/create_post.html'
     form_class = PostForm
 
     def get(self, request, *args, **kwargs):
@@ -94,10 +96,16 @@ class CreateCommentView(View):
                 messages.error(request, "smthing went wrong while saving")
                 messages.debug(request, f'{e.__cause__}')
             else:
-                messages.success(request, "Your post have been saved!", "alert alert-success")
+                messages.success(request, "Your comment have been saved!", "alert alert-success")
 
             return render(request, self.template_name, {'post':post, 'comments':comments, 'form':form})
         else:
             messages.error(request, "Something went wrong, your comment wasn't created!")
             
             return render(request, self.template_name, {'post':post, 'comments':comments, 'form':form})
+
+class ProfileView(View):
+    template_name = 'blogdemo/profile.html'
+    def get(self, request, *args, **kwargs):
+        posts = Post.objects.all().filter(creator=request.user.id)
+        return render(request, self.template_name, {'posts':posts})

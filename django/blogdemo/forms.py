@@ -21,3 +21,11 @@ class CommentForm(forms.ModelForm):
         widgets = {
             'text': Textarea(attrs={'rows': 3}),
         }
+import django_filters
+from django.db import models
+
+class PostFilter(django_filters.FilterSet):
+    creator = django_filters.CharFilter(lookup_expr='username__exact')
+    class Meta:
+        model = Post
+        fields = ['creator',]

@@ -1,14 +1,39 @@
 {% extends "blogdemo/base_blogdemo.html" %}
 
-{% block content %}
-    <div class="col-lg">
-    {% if posts %}
-        <h1>Posts</h1>
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+
+{% block header %}<div class="col-12"><h1>Posts</h1></div>{% endblock %}
+
+{% block text %}
+<div class="col-12">
+    <div class="row">
+        <form method="get" class="form-inline">
+            <div class="form-group">
+                {{ filter.form.creator.label_tag}}
+            </div>
+            <div class="form-group mx-sm-3">
+                {% render_field filter.form.creator class="form-control" %}
+            </div>
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </form>
+    </div>
+</div>
+
+{% if filter.qs %}
+<div class="row">
+    <div class="col-12">
         <ul>
-        {% for post in posts %}
+        {% for post in filter.qs %}
             <li><a href="{% url 'blogdemo:detail' post.id %}">{{ post.title }}</a></li>
         {% endfor %}
         </ul>
-    {% endif %}
     </div>
+</div>
+{% else %}
+<p>
+    This user doesn't have any posts
+</p>
+{% endif %}
+
 {% endblock %}
