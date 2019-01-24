@@ -8,6 +8,14 @@
         <li class="nav-item"><a href="{% url 'blogdemo:createpost' %}" class="nav-link">Create Post</a></li>
         {% if user.is_authenticated %}
         <li class="nav-item"><a href="{% url 'blogdemo:profile' %}" class="nav-link">My Posts</a></li>
+        <li class="nav-item dropdown show">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Showcase
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{% url 'blogdemo:owner_access' %}">Access Controll</a>
+          </div>
+        </li>
         {% endif %}
     </ul>
     {% endactiveurl %}

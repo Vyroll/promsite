@@ -51,7 +51,7 @@ class DetailView(View):
         post = Post.objects.get(pk=self.kwargs['pk'])
         return post.creator.id == self.request.user.id
         
-class CreatePostView(View):
+class CreatePostView(LoginRequiredMixin, View):
     """Creating Post"""
     template_name = 'blogdemo/post/create_post.html'
     form_class = PostForm
@@ -124,7 +124,7 @@ class EditPostView(RedirectMixin, UserPassesTestMixin, View):
         post = Post.objects.get(pk=self.kwargs['pk'])
         return post.creator.id == self.request.user.id
 
-class CreateCommentView(View):
+class CreateCommentView(LoginRequiredMixin, View):
     """Creating Comment"""
     template_name = 'blogdemo/post/detail.html'
     form_class = CommentForm
@@ -180,4 +180,10 @@ class ProfileView(LoginRequiredMixin, View):
     template_name = 'blogdemo/profile.html'
     def get(self, request, *args, **kwargs):
         posts = Post.objects.all().filter(creator=request.user.id)
+        return render(request, self.template_name, {'posts':posts})
+        
+class OwnerAccessView(LoginRequiredMixin, View):
+    template_name = 'blogdemo/showcase/owner_access.html'
+    def get(self, request, *args, **kwargs):
+        posts = Post.objects.all()
         return render(request, self.template_name, {'posts':posts})

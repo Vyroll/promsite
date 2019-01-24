@@ -1,0 +1,32 @@
+{% extends "blogdemo/base_blogdemo.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block header %}<div class="col-12"><h1>My Posts</h1></div>{% endblock %}
+
+{% block text %}
+<div class="row">
+    {% if posts %}
+    <div class="col-12">
+        <ul>
+        {% for post in posts %}
+            <li class="mb-2">
+                <a href="{% url 'blogdemo:detail' post.id %}">{{ post.title }}</a>
+                <span class="text-muted"> - {{post.creator}}/{{post.pub_date}}</span>
+                <a class="btn btn-primary btn-sm" href="{% url 'blogdemo:post_edit' post.id %}" role="button">Edit</a>
+            <form 
+                class = "d-inline"
+                action="{% url 'blogdemo:post_delete' post.id %}"
+                method="post"
+                onsubmit="return confirm('Are you sure that you want to Delete this Post?');"
+            >
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary btn-sm">Delete</button>
+            </form>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
