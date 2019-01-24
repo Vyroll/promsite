@@ -10,7 +10,19 @@
     <div class="col-12">
         <ul>
         {% for post in posts %}
-            <li><a href="{% url 'blogdemo:detail' post.id %}">{{ post.title }}</a></li>
+            <li class="mb-2">
+                <a href="{% url 'blogdemo:detail' post.id %}">{{ post.title }}</a>
+                <a class="btn btn-primary btn-sm" href="{% url 'blogdemo:post_edit' post.id %}" role="button">Edit</a>
+            <form 
+                class = "d-inline"
+                action="{% url 'blogdemo:post_delete' post.id %}" 
+                method="post"
+                onsubmit="return confirm('Are you sure that you want to Delete this Post?');"
+            >
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary btn-sm">Delete</button>
+            </form>
+            </li>
         {% endfor %}
         </ul>
     </div>

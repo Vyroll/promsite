@@ -1,0 +1,17 @@
+{% extends "blogdemo/base_blogdemo.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block header %}<div class="col-12"><h1>Edit Post</h1></div>{% endblock %}
+
+{% block text %}
+    <div class="row">
+        <div class="col-8">
+            <form action="{% url 'blogdemo:post_edit' post_id %}" method="post">
+                {% csrf_token %}
+                {{form|crispy}}
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
