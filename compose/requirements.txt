@@ -3,3 +3,4 @@ django-crispy-forms
 django-activeurl
 django-filter
 django-widget-tweaks
+django-allauth
