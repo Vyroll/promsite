@@ -1,0 +1,49 @@
+{% extends "blogdemo/base_blogdemo.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block header %}<div class="col-12"><h1>Transactions Showcase</h1></div>{% endblock %}
+
+{% block text %}
+<div class="row">
+    <div class="col-12">
+        <p>Goal of this view is to showcase how transactions can ensure data integrity.</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 col-lg-6">
+        <h2>Form</h2>
+        <p>Make sure to fill all fields.</p>
+        <p>Creating comment will always fail - this is made so to make showcase possible.</p>
+        <p>If you submit data normally post will be created but comment not. If you submit with Transaction system will see that comment cant be created and post will not be created as well.</p>
+        <form action="{% url 'blogdemo:transactions' %}" method="post">
+            {% csrf_token %}
+            <h3>Post</h3>
+            {{post_formset|crispy}}
+            <h3>Comment</h3>
+            {{comment_formset|crispy}}
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary" formaction="{% url 'blogdemo:transactions_safe' %}">Submit with Transaction</button>
+        </form>
+    </div>
+    <div class="col-12 col-lg-6">
+    <h2>Listing</h2>
+    <p>
+        Displayed are only post and comments created in last two hours.<br>
+        (post.id) - you can see how posts and comments relate to each other by looking at value in parenthesis.
+    </p>
+    <h3>Posts</h3>
+    <ul>
+        {% for post in posts %}
+            <li>{{post}}({{post.id}})</li>
+        {% endfor %}
+    </ul>
+    <h3>Comments</h3>
+    <ul>
+        {% for comment in comments %}
+            <li>{{comment}}({{comment.post.id}})</li>
+        {% endfor %}
+    </ul>
+    </div>
+</div>
+{% endblock %}

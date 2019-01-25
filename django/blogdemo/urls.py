@@ -13,4 +13,6 @@ urlpatterns = [
     path('post/<int:pk>/edit/', views.EditPostView.as_view(), name='post_edit'),
     path('post/<int:pk>/delete/', views.DeletePostView.as_view(), name='post_delete'),
     path('post/owner_access/', views.OwnerAccessView.as_view(), name='owner_access'),
+    path('post/transactions/', views.TransactionsView.as_view(), name='transactions'),
+    path('post/transactions_safe/', views.TransactionsSafeView.as_view(), name='transactions_safe'),
 ]

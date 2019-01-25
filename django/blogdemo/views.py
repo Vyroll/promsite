@@ -7,6 +7,9 @@ from django.contrib import messages
 from django.db import IntegrityError
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, AccessMixin
 from django.contrib.auth.views import redirect_to_login
+from django.db import transaction
+from django.forms import formset_factory
+import datetime
 
 from .models import Post, Comment
 from .forms import PostForm, CommentForm, PostFilter
@@ -187,3 +190,86 @@ class OwnerAccessView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         posts = Post.objects.all()
         return render(request, self.template_name, {'posts':posts})
+        
+class TransactionsView(View):
+    template_name = 'blogdemo/showcase/transactions.html'
+    PostFormSet = formset_factory(PostForm)
+    CommentFormSet = formset_factory(CommentForm)
+    
+    def get(self, request, *args, **kwargs):
+        post_formset = self.PostFormSet(prefix='posts')
+        comment_formset = self.CommentFormSet(prefix='comments')
+        
+        recent = timezone.now() - datetime.timedelta(hours=2)
+        posts = Post.objects.all().filter(pub_date__gte=recent)
+        comments = Comment.objects.all().filter(pub_date__gte=recent)
+
+        return render(request, self.template_name, {
+            'post_formset':post_formset,
+            'comment_formset':comment_formset,
+            'posts':posts,
+            'comments':comments,
+            })
+
+    # @transaction.atomic
+    def post(self, request, *args, **kwargs):
+        post_formset = self.PostFormSet(request.POST, prefix='posts')
+        comment_formset = self.CommentFormSet(request.POST, prefix='comments')
+
+        if post_formset.is_valid() and comment_formset.is_valid():
+            messages.success(request, "form is valid")
+            try:
+                # with transaction.atomic():
+                    post = Post.objects.create(
+                        title=post_formset[0].cleaned_data['title'],
+                        text=post_formset[0].cleaned_data['text'],
+                        pub_date=timezone.now(),
+                        creator=request.user,
+                    )
+                    for form in comment_formset:
+                        Comment.objects.create(
+                            post=post,
+                            creator=request.user,
+                            # pub_date=timezone.now(),
+                            text=form.cleaned_data["text"],
+                        )
+            except IntegrityError:
+                messages.error(request, "Smth went wrong")
+        else:
+            messages.error(request, "form is not valid")
+            
+        return HttpResponseRedirect(reverse('blogdemo:transactions'))
+        
+class TransactionsSafeView(View):
+    template_name = 'blogdemo/showcase/transactions.html'
+    PostFormSet = formset_factory(PostForm)
+    CommentFormSet = formset_factory(CommentForm)
+    
+    @transaction.atomic
+    def post(self, request, *args, **kwargs):
+        post_formset = self.PostFormSet(request.POST, prefix='posts')
+        comment_formset = self.CommentFormSet(request.POST, prefix='comments')
+
+        if post_formset.is_valid() and comment_formset.is_valid():
+            messages.success(request, "form is valid")
+            try:
+                with transaction.atomic():
+                    post = Post.objects.create(
+                        title=post_formset[0].cleaned_data['title'],
+                        text=post_formset[0].cleaned_data['text'],
+                        pub_date=timezone.now(),
+                        creator=request.user,
+                    )
+                    for form in comment_formset:
+                        Comment.objects.create(
+                            post=post,
+                            creator=request.user,
+                            # pub_date=timezone.now(),
+                            text=form.cleaned_data["text"],
+                        )
+            except IntegrityError:
+                messages.error(request, "Smth went wrong")
+        else:
+            messages.error(request, "form is not valid")
+            
+        return HttpResponseRedirect(reverse('blogdemo:transactions'))
