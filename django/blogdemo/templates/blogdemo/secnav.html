@@ -6,6 +6,7 @@
     <ul class="nav nav-dark">
         <li class="nav-item"><a href="{% url 'blogdemo:index' %}" class="nav-link">Index</a></li>
         <li class="nav-item"><a href="{% url 'blogdemo:createpost' %}" class="nav-link">Create Post</a></li>
+        <li class="nav-item"><a href="{% url 'api-root' %}" class="nav-link">Api</a></li>
         {% if user.is_authenticated %}
         <li class="nav-item"><a href="{% url 'blogdemo:profile' %}" class="nav-link">My Posts</a></li>
         <li class="nav-item dropdown show">

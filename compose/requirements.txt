@@ -4,3 +4,7 @@ django-activeurl
 django-filter
 django-widget-tweaks
 django-allauth
+djangorestframework
+markdown
+coreapi
+pyyaml
