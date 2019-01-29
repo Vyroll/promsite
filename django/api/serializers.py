@@ -36,7 +36,7 @@ class PostSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Post
-        fields = ('title', 'text', 'pub_date', 'creator','comment_set')
+        fields = ('url', 'title', 'text', 'pub_date', 'creator','comment_set')
 
 class CommentSerializer(serializers.HyperlinkedModelSerializer):
     pub_date = serializers.DateTimeField(read_only=True,)
@@ -51,4 +51,4 @@ class CommentSerializer(serializers.HyperlinkedModelSerializer):
     
     class Meta:
         model = Comment
-        fields = ('text', 'pub_date', 'creator', 'post')
+        fields = ('url', 'text', 'pub_date', 'creator', 'post')

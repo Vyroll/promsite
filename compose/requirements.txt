@@ -8,3 +8,4 @@ djangorestframework
 markdown
 coreapi
 pyyaml
+djangorestframework_simplejwt
