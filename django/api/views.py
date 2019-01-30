@@ -1,5 +1,6 @@
 from rest_framework import viewsets
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 from .serializers import UserSerializer, GroupSerializer, PostSerializer, CommentSerializer
 
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
@@ -62,6 +63,7 @@ class CommentViewSet(viewsets.ModelViewSet):
             pub_date=timezone.now(),
         )
 
+@login_required
 def GetTokenView(request):
     token = Token.objects.get(user=request.user)
     return HttpResponse(f"Your token: {token}")

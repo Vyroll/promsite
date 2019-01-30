@@ -1,0 +1,90 @@
+{% extends "blogdemo/base_blogdemo.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block header %}<div class="col-12"><h1>Api Authorisation</h1></div>{% endblock %}
+
+{% block text %}
+<div class="row">
+    <div class="col-12">
+        <p>Some parts of api are accesable without authentication, but to others you will need access. Api allows few means of authorisation. Bellow you can read how to test them. The easiest way is to use <a href="https://www.getpostman.com/">Postman</a> or just use provided <a href="{% url 'api-root' %}">web interface</a>.</p>
+    </div>
+    <div class="col-12 col-lg-6">
+        <h2>Authentication</h2>
+        <div class="row">
+            <div class="col-12">
+                <h3>Basic</h3>
+                <p>
+                    Using web interface just sign in by login form. In Postman you will need to go to "Authorisation" tab, chose "Basic Auth" and fillin credentials.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <h3>Token</h3>
+                <p>1st you will need to retrive your token. You can do this in two ways:
+                <ul>
+                    <li>
+                        When authenticated go to this view:
+                        <a href="http://localhost/api/get_token/">http://localhost/api/get_token/</a><br>
+                    </li>
+                    <li>
+                        You can also request token like this:<br>
+                        POST: http://localhost/api/retrieve_token/<br>
+                        BODY: username:&ltusername&gt, password:&ltpassword&gt
+                    </li>
+                </ul>
+                <p>
+                    Now you can authenticate yourself in requests by apending HEADER with:<br>
+                    'Authorization':'token &lttoken&gt'
+                </p>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <h3>JWT</h3>
+                    <ul>
+                        <li>
+                            <span class="font-weight-bold">Retrive token:</span><br>
+                            POST http://localhost/api/jwt/<br>
+                            BODY: username:&ltusername&gt, password:&ltpassword&gt<br>
+                            RESPONSE: [refresh_token, access_token]
+                        </li>
+                        <li>
+                            <span class="font-weight-bold">Authenticate using JWT:</span><br>
+                            HEADERS: 'Authorization':'Bearer &ltaccess_token&gt'
+                        </li>
+                        <li>
+                            <span class="font-weight-bold">Refresh token:</span><br>
+                            POST http://localhost/api/jwt/refresh/<br>
+                            BODY: 'refresh':'&ltrefresh_token&gt'
+                        </li>
+                        <li>
+                            <span class="font-weight-bold">Verify token:</span><br>
+                            POST http://localhost/api/jwt/verify/<br>
+                            BODY: 'token':'&lttoken&gt'
+                        </li>
+                    </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <h2>Requests:</h2>
+        <ul>
+            <li>GET: http://localhost/api/<br>
+            <span class="text-muted">This is a root view of api, form here you will be able to easly traverse all views.</span></li>
+            <li>GET: http://localhost/api/posts/<br>
+            <span class="text-muted">From here you can see all posts.</span> </li>
+            <li>GET: http://localhost/api/posts/&ltid&gt/<br>
+            <span class="text-muted">This is detailed view of the post, to access it you will need to be authenticated.</span></li>
+            <li>
+                PATCH: http://localhost/api/posts/&ltid&gt/<br>
+                BODY: title:&lttitle&gt and/or text:&lttext&gt<br>
+                <span class="text-muted">This wat you can update your post. Remember that you have to be authenticated and you can only change your own posts.</span>
+            </li>
+        </ul>
+
+    </div>
+</div>
+{% endblock %}

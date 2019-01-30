@@ -4,11 +4,22 @@
   <div class="container d-flex">
     {% activeurl menu="no" %}
     <ul class="nav nav-dark">
-        <li class="nav-item"><a href="{% url 'blogdemo:index' %}" class="nav-link">Index</a></li>
-        <li class="nav-item"><a href="{% url 'blogdemo:createpost' %}" class="nav-link">Create Post</a></li>
+        <li class="nav-item dropdown show">
+          <a class="nav-link dropdown-toggle dropdown-toggle-split" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Posts
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{% url 'blogdemo:index' %}">Index</a>
+            {% if user.is_authenticated %}
+              <a class="dropdown-item" href="{% url 'blogdemo:profile' %}">My Posts</a>
+              <a class="dropdown-item" href="{% url 'blogdemo:createpost' %}">Create Post</a>
+            {% else %}
+              <a class="dropdown-item disabled " href="{% url 'blogdemo:profile' %}">My Posts</a>
+              <a class="dropdown-item disabled " href="{% url 'blogdemo:createpost' %}">Create Post</a>
+            {% endif %}
+          </div>
+        </li>
         <li class="nav-item"><a href="{% url 'api-root' %}" class="nav-link">Api</a></li>
-        {% if user.is_authenticated %}
-        <li class="nav-item"><a href="{% url 'blogdemo:profile' %}" class="nav-link">My Posts</a></li>
         <li class="nav-item dropdown show">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Showcase
@@ -16,9 +27,9 @@
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="{% url 'blogdemo:owner_access' %}">Access Controll</a>
             <a class="dropdown-item" href="{% url 'blogdemo:transactions' %}">Transactions</a>
+            <a class="dropdown-item" href="{% url 'blogdemo:api_authorisation' %}">Api Authorisation</a>
           </div>
         </li>
-        {% endif %}
     </ul>
     {% endactiveurl %}
   </div>

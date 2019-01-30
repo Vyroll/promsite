@@ -1,36 +1,38 @@
-<div class="border-top bg-light footer-bottom mt-3">
-    <footer class="container mt-3">
+<div class="border-top bg-light footer-bottom mt-3 py-3">
+    <footer class="container small">
         <div class="row">
-            <div class="col-12 col-md">
-                <small class="d-block mb-3 text-muted">Vyroll© 2019-2020</small>
+            <div class="col-12 text-center">
+                <span class="d-block mb-3 text-muted">Copyright © <a class="text-muted" href="http://vyroll.xyz/">Vyroll.xyz</a></span>
             </div>
-            <div class="col-6 col-md">
-                <h5>Features</h5>
-                <ul class="list-unstyled text-small">
-                <li><a class="text-muted" href="#">Cool stuff</a></li>
-                <li><a class="text-muted" href="#">Random feature</a></li>
-                <li><a class="text-muted" href="#">Team feature</a></li>
-                <li><a class="text-muted" href="#">Stuff for developers</a></li>
-                <li><a class="text-muted" href="#">Another one</a></li>
-                <li><a class="text-muted" href="#">Last time</a></li>
-                </ul>
+            <div class="col-6">
+                <h5><a class="text-body" href="{% url 'promo:contact' %}">Contact:</a></h5>
+                <table>
+                    <tr>
+                        <td><i class="text-muted fas fa-user"></i></td>
+                        <td><span class="text-muted">Łukasz Nosal</span></td>
+                    </tr>
+                    <tr>
+                        <td><i class="text-muted fas fa-at"></i></td>
+                        <td><a href="mailto:lukasz.nosal@protonmail.com" class="text-muted">Lukasz.nosal@protonmail.com</a></td>
+                    </tr>
+                    <tr>
+                        <td><i class="text-muted fab fa-linkedin"></i></td>
+                        <td><a href="https://linkedin.com/in/lukasz-nosal/" class="text-muted">Linkedin</a></td>
+                    </tr>
+                    <tr>
+                        <td><i class="text-muted fab fa-github"></i></td>
+                        <td><a href="https://github.com/Vyroll" class="text-muted">Github</a></td>
+                    </tr>
+                </table>
             </div>
-            <div class="col-6 col-md">
-                <h5>Resources</h5>
-                <ul class="list-unstyled text-small">
-                <li><a class="text-muted" href="#">Resource</a></li>
-                <li><a class="text-muted" href="#">Resource name</a></li>
-                <li><a class="text-muted" href="#">Another resource</a></li>
-                <li><a class="text-muted" href="#">Final resource</a></li>
-                </ul>
-            </div>
-            <div class="col-6 col-md">
-                <h5>About</h5>
-                <ul class="list-unstyled text-small">
-                <li><a class="text-muted" href="#">Team</a></li>
-                <li><a class="text-muted" href="#">Locations</a></li>
-                <li><a class="text-muted" href="#">Privacy</a></li>
-                <li><a class="text-muted" href="#">Terms</a></li>
+            <div class="col-6">
+                <h5>Quick links:</h5>
+                <ul class="list-unstyled">
+                    <li><a class="text-muted" href="{% url 'promo:index' %}">Home</a></li>
+                    <li><a class="text-muted" href="{% url 'blogdemo:index' %}">Blog demo</a></li>
+                    <li><a class="text-muted" href="{% url 'promo:contact' %}">Contact</a></li>
+                    <li><a class="text-muted" href="{% url 'api-root' %}">Api</a></li>
+                    <li><a class="text-muted" href="{% url 'admin:index' %}">Admin</a></li>
                 </ul>
             </div>
         </div>

@@ -1,5 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>It's promo app</h1>
+    <div class="row">
+        <div class="col-12">
+            <h1>Hello!</h1>
+            <p>I’m Łukasz and this is my demo website. Feel free to explore. To test all functionalities you will need to create your account, but don’t worry, u don’t even have to provide your email. To see how this website works make sure to visit my <a href="https://github.com/Vyroll/promsite">Github</a>. Website was created in Django and makes use of many its features for example you can interact with site via <a href="{% url 'blogdemo:api_authorisation' %}">API</a>.</p>
+            <h2><a class="text-body" href="{% url 'promo:contact' %}">Contact:</a></h2>
+            {% include "contact_table.html" %}
+        </div>
+    </div>
 {% endblock %}

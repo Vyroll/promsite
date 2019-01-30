@@ -23,7 +23,7 @@ urlpatterns = [
     path('schema/', schema_view),
     path('', include(router.urls)),
     path('retrieve_token/', obtain_auth_token),
-    path('get_token/', views.GetTokenView),
+    path('get_token/', views.GetTokenView, name='get_token'),
     path('jwt/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('jwt/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('jwt/verify/', TokenVerifyView.as_view(), name='token_verify'),

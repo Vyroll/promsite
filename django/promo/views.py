@@ -6,3 +6,9 @@ class IndexView(View):
 
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name)
+        
+class ContactView(View):
+    template_name = 'promo/contact.html'
+    
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)

@@ -191,7 +191,7 @@ class OwnerAccessView(LoginRequiredMixin, View):
         posts = Post.objects.all()
         return render(request, self.template_name, {'posts':posts})
         
-class TransactionsView(View):
+class TransactionsView(LoginRequiredMixin, View):
     template_name = 'blogdemo/showcase/transactions.html'
     PostFormSet = formset_factory(PostForm)
     CommentFormSet = formset_factory(CommentForm)
@@ -273,3 +273,9 @@ class TransactionsSafeView(View):
             messages.error(request, "form is not valid")
             
         return HttpResponseRedirect(reverse('blogdemo:transactions'))
+
+class ApiAuthorisationView(View):
+    template_name = 'blogdemo/showcase/api_authorisation.html'
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
