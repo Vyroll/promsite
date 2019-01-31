@@ -3,8 +3,18 @@ version: '3'
 services:
   web:
     build: .
-    command: python3 manage.py runserver 0.0.0.0:80
+    command: bash -c "python manage.py collectstatic --no-input && python manage.py makemigrations && python manage.py migrate && gunicorn --workers=2 --bind=0.0.0.0:8000 promosite.wsgi:application"
     volumes:
       - ../django:/code
+      - /static:/static
+    ports:
+      - "8000:8000"
+  nginx:
+    image: nginx
     ports:
       - "80:80"
+    volumes:
+      - ../nginx:/etc/nginx/conf.d
+      - /static:/static
+    depends_on:
+      - web

@@ -9,3 +9,4 @@ markdown
 coreapi
 pyyaml
 djangorestframework_simplejwt
+gunicorn
